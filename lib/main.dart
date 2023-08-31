@@ -1,7 +1,13 @@
-import 'package:first_project/video_call_screen.dart';
+import 'package:first_project/screens/permission_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Hive.initFlutter();
+  await Hive.openBox("login-info");
+
   runApp(const MyApp());
 }
 
@@ -15,7 +21,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: const VideoCallScreen(),
+      home: const Testing2(),
     );
   }
 }
