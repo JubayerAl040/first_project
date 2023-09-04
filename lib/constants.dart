@@ -12,7 +12,7 @@ Container getBoxButton(String img) => Container(
       height: 38,
       width: 38,
       padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: cardPrimaryColor,
       ),
       child: Image.asset(img, fit: BoxFit.contain),

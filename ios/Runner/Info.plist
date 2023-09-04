@@ -24,6 +24,18 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>This app requires access to the Camera</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This app requires access to the photo library</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app requires access to the photo library</string>
+	<key>PermissionGroupNotification</key>
+	<string>This app requires access to the send notifications.</string>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
+	<key>UISupportsDocumentBrowser</key>
+	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

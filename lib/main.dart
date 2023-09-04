@@ -1,4 +1,4 @@
-import 'package:first_project/screens/permission_screen.dart';
+import 'package:first_project/screens/file_picker_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: const Testing2(),
+      home: const FilePickerScreen(),
     );
   }
 }
