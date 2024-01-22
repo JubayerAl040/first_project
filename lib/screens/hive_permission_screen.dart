@@ -116,12 +116,12 @@ class _PermissionScreenState extends State<PermissionScreen> {
     try {
       final status = await Permission.photos.request();
       print("status: $status");
-      if (status == PermissionStatus.denied) {
-        _showAlertDialog();
-        // openAppSettings()
-      } else {
-        print('Permission granted Occured');
-      }
+      // if (status == PermissionStatus.denied) {
+      //   _showAlertDialog();
+      //   // openAppSettings()
+      // } else {
+      //   print('Permission granted Occured');
+      // }
     } catch (e) {
       print('Exception Occured');
     }
