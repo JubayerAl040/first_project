@@ -26,7 +26,7 @@
         </intent>
     </queries>
     <application
-        android:label="first_project"
+        android:label="Jb Rockz"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity

@@ -1,6 +1,7 @@
+import 'package:first_project/screens/book_photograph_screen.dart';
+import 'package:first_project/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:intl/intl.dart';
 
 class InAppUpdateScreen extends StatefulWidget {
   const InAppUpdateScreen({super.key});
@@ -11,14 +12,15 @@ class InAppUpdateScreen extends StatefulWidget {
 class _InAppUpdateScreenState extends State<InAppUpdateScreen> {
   final List<int> _scheduleDates = [1, 3, 4, 6, 7];
   final _dateController = TextEditingController();
+  final _clockController = TextEditingController();
 
   bool _isDateHighlighted(DateTime date) {
     for (int i = 0; i < _scheduleDates.length; i++) {
-      print('its coming here');
       if (_scheduleDates[i] == date.weekday) {
         return true;
       }
     }
+
     return false;
   }
 
@@ -44,20 +46,40 @@ class _InAppUpdateScreenState extends State<InAppUpdateScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('In App Review Example')),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              onPressed: _checkHeighLightDate,
-              child: const Text('Check Heighlight Date'),
-            ),
-            const SizedBox(height: 20),
-            CmDateField(label: "Birth Date", controller: _dateController)
-          ],
+    return PopScope(
+      onPopInvoked: (_) async => await showExitPopup(context),
+      child: Scaffold(
+        appBar: AppBar(title: const Text('In App Review Example')),
+        body: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => const WelcomeScreen()));
+                },
+                child: const Text('Go To Welcome Screen'),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => const BookPhotographScreen()));
+                },
+                child: const Text('BookPhotographScreen'),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _checkHeighLightDate,
+                child: const Text('Check Heighlight Date'),
+              ),
+              const SizedBox(height: 20),
+            ],
+          ),
         ),
       ),
     );
@@ -66,68 +88,56 @@ class _InAppUpdateScreenState extends State<InAppUpdateScreen> {
   @override
   void dispose() {
     _dateController.dispose();
+    _clockController.dispose();
     super.dispose();
   }
 }
 
-class CmDateField extends StatelessWidget {
-  const CmDateField(
-      {super.key,
-      required this.label,
-      required this.controller,
-      this.firstDate,
-      this.lastDate});
-  final String label;
-  final TextEditingController controller;
-  final DateTime? firstDate;
-  final DateTime? lastDate;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        // color line
-        Container(
-          width: 0.4,
-          height: 20,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: MyColor.bluePrimary,
-          ),
+Future<bool> showExitPopup(BuildContext context) async => await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text(
+          'Exit App',
+          style: TextStyle(
+              fontFamily: "poppins_regular", fontWeight: FontWeight.bold),
         ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: TextFormField(
-            controller: controller,
-            readOnly: true,
-            textInputAction: TextInputAction.done,
-            style: const TextStyle(fontSize: 16),
-            decoration: InputDecoration(
-              labelText: label,
-              suffixIcon: const Icon(Icons.calendar_today_outlined),
+        content: const Text(
+          'Do you want to exit SoowGood?',
+          style: TextStyle(
+              fontFamily: "poppins_regular",
+              fontSize: 14,
+              fontWeight: FontWeight.w600),
+        ),
+        actions: [
+          ElevatedButton(
+            onPressed: () => Navigator.pop(context, false),
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(MyColor.bluePrimary),
             ),
-            onTap: () async {
-              DateTime? date = await showDatePicker(
-                context: context,
-                initialDate: DateTime.now(),
-                firstDate: firstDate ??
-                    DateTime.now().subtract(const Duration(days: 70 * 365)),
-                lastDate:
-                    lastDate ?? DateTime.now().add(const Duration(days: 30)),
-              );
-              if (date == null) return;
-              controller.text = (DateFormat.yMMMd().format(date));
-            },
-            validator: (value) {
-              return null;
-            },
+            child: const Text(
+              'No',
+              style: TextStyle(color: MyColor.ashhLight),
+            ),
           ),
-        ),
-        const SizedBox(width: 10),
-      ],
+          Padding(
+            padding: const EdgeInsets.only(right: 4.0),
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context, true);
+                Navigator.pop(context, true);
+              },
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(MyColor.bluePrimary),
+              ),
+              child: const Text(
+                'Yes',
+                style: TextStyle(color: MyColor.ashhLight),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
-  }
-}
 
 class MyColor {
   static const categoryColor = [
