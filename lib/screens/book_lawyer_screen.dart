@@ -6,18 +6,18 @@ import 'package:first_project/widgets/cm_widgets/cm_name_email_field.dart';
 import 'package:first_project/widgets/cm_widgets/cm_repo.dart';
 import 'package:flutter/material.dart';
 
-class BookPhotographScreen extends StatefulWidget {
-  const BookPhotographScreen({super.key});
+class BookLawyerScreen extends StatefulWidget {
+  const BookLawyerScreen({super.key});
   @override
-  State<BookPhotographScreen> createState() => _BookPhotographScreenState();
+  State<BookLawyerScreen> createState() => _BookLawyerScreenState();
 }
 
-class _BookPhotographScreenState extends State<BookPhotographScreen> {
+class _BookLawyerScreenState extends State<BookLawyerScreen> {
   final _dateField = TextEditingController();
   final _clockField = TextEditingController();
   final _selectedDuration = ValueNotifier<int>(0);
   final _selectedSeason = ValueNotifier<String>("");
-  final _selectedPhotoGrapher = ValueNotifier<String>("");
+  final _selectedLawyer = ValueNotifier<String>("");
   final _additionalInfo = TextEditingController();
   final _durationList = [
     "15 min",
@@ -51,7 +51,7 @@ class _BookPhotographScreenState extends State<BookPhotographScreen> {
           icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
         ),
         title: const Text(
-          "Book Photograph",
+          "Book Lawyer",
           style: TextStyle(color: Colors.white, fontSize: 17),
         ),
       ),
@@ -83,7 +83,15 @@ class _BookPhotographScreenState extends State<BookPhotographScreen> {
                 ],
               ),
               const SizedBox(height: 20),
-              CmRepo().titleText("Duration"),
+              Row(
+                children: [
+                  CmRepo().titleText("Duration"),
+                  const Spacer(),
+                  CmRepo().titleText("Online"),
+                  const SizedBox(width: 5),
+                  Switch.adaptive(value: true, onChanged: (_) {}),
+                ],
+              ),
               const SizedBox(height: 5),
               ValueListenableBuilder(
                 valueListenable: _selectedDuration,
@@ -121,18 +129,26 @@ class _BookPhotographScreenState extends State<BookPhotographScreen> {
                 ),
               ),
               const SizedBox(height: 20),
-              CmDropDownField(
-                title: "Season",
-                dropList: _seasonTypeList,
-                selectedVal: _selectedSeason,
-                label: "Select Season Type",
+              CmNameEmailField(
+                title: "Type Your Court",
+                controller: _additionalInfo,
+                label: "Write here.....",
+                readOnly: false,
+                maxLines: 3,
               ),
               const SizedBox(height: 20),
               CmDropDownField(
-                title: "Photographer",
+                title: "Case Type",
                 dropList: _seasonTypeList,
-                selectedVal: _selectedPhotoGrapher,
-                label: "Select Your Photographer",
+                selectedVal: _selectedSeason,
+                label: "Select Case Type",
+              ),
+              const SizedBox(height: 20),
+              CmDropDownField(
+                title: "Lawyer",
+                dropList: _seasonTypeList,
+                selectedVal: _selectedLawyer,
+                label: "Select Your Lawyer",
               ),
               const SizedBox(height: 20),
               CmNameEmailField(

@@ -1,3 +1,4 @@
+import 'package:first_project/screens/book_lawyer_screen.dart';
 import 'package:first_project/screens/book_photograph_screen.dart';
 import 'package:first_project/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
@@ -71,6 +72,16 @@ class _InAppUpdateScreenState extends State<InAppUpdateScreen> {
                           builder: (_) => const BookPhotographScreen()));
                 },
                 child: const Text('BookPhotographScreen'),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => const BookLawyerScreen()));
+                },
+                child: const Text('BookLawyerScreen'),
               ),
               const SizedBox(height: 20),
               ElevatedButton(
