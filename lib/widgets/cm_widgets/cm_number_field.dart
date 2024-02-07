@@ -16,19 +16,25 @@ class CmNumberField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         CmRepo().titleText(title),
         const SizedBox(height: 5),
         TextFormField(
           controller: controller,
           textInputAction: TextInputAction.done,
-          keyboardType: TextInputType.number,
+          style: const TextStyle(fontSize: 16, color: Colors.white),
           decoration: InputDecoration(
-            labelText: label,
-            fillColor: Colors.white60,
+            hintText: label,
+            hintStyle: const TextStyle(fontSize: 13, color: Colors.grey),
+            filled: true,
+            fillColor: const Color.fromARGB(26, 99, 99, 99),
             enabledBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.white12),
+              borderSide: BorderSide(color: Colors.white24),
+              borderRadius: BorderRadius.all(Radius.circular(14)),
             ),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+            focusedBorder: InputBorder.none,
           ),
           readOnly: readOnly ?? false,
           validator: (val) {

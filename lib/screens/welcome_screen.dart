@@ -8,15 +8,11 @@ class WelcomeScreen extends StatefulWidget {
   State<WelcomeScreen> createState() => _WelcomeScreenState();
 }
 
-const _duration1 = Duration(seconds: 3);
-const _duration2 = Duration(seconds: 2);
+const _duration = Duration(seconds: 2);
 
 class _WelcomeScreenState extends State<WelcomeScreen>
     with TickerProviderStateMixin {
-  late AnimationController _controller1;
-  late AnimationController _controller2;
-  late Animation<double> _imgAnim1;
-  late Animation<double> _imgAnimEnd1;
+  late AnimationController _controller;
   late Animation<double> _textAnim1,
       _textAnim2,
       _textAnim3,
@@ -45,75 +41,67 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   }
 
   void _initializeAnimation() {
-    _controller1 = AnimationController(vsync: this, duration: _duration1);
-    _controller2 = AnimationController(vsync: this, duration: _duration2);
-    _imgAnim1 = (CurvedAnimation(
-        parent: _controller1,
-        curve: const Interval(.0, 0.3, curve: Curves.easeInCubic)));
-    _imgAnimEnd1 = CurvedAnimation(
-        parent: _controller1,
-        curve: const Interval(.6, 1, curve: Curves.easeOut));
+    _controller = AnimationController(vsync: this, duration: _duration);
 
     ///
     /// welcome-text animation
     _textAnim1 =
-        CurvedAnimation(parent: _controller2, curve: const Interval(.0, .07));
+        CurvedAnimation(parent: _controller, curve: const Interval(.0, .07));
     _textAnimEnd1 =
-        CurvedAnimation(parent: _controller2, curve: const Interval(.03, .12));
+        CurvedAnimation(parent: _controller, curve: const Interval(.03, .12));
     _textAnim2 =
-        CurvedAnimation(parent: _controller2, curve: const Interval(.10, .19));
+        CurvedAnimation(parent: _controller, curve: const Interval(.10, .19));
     _textAnimEnd2 =
-        CurvedAnimation(parent: _controller2, curve: const Interval(.17, .26));
+        CurvedAnimation(parent: _controller, curve: const Interval(.17, .26));
     _textAnim3 =
-        CurvedAnimation(parent: _controller2, curve: const Interval(.24, .33));
+        CurvedAnimation(parent: _controller, curve: const Interval(.24, .33));
     _textAnimEnd3 =
-        CurvedAnimation(parent: _controller2, curve: const Interval(.31, .40));
+        CurvedAnimation(parent: _controller, curve: const Interval(.31, .40));
     _textAnim4 =
-        CurvedAnimation(parent: _controller2, curve: const Interval(.38, .47));
+        CurvedAnimation(parent: _controller, curve: const Interval(.38, .47));
     _textAnimEnd4 =
-        CurvedAnimation(parent: _controller2, curve: const Interval(.45, .54));
+        CurvedAnimation(parent: _controller, curve: const Interval(.45, .54));
     _textAnim5 =
-        CurvedAnimation(parent: _controller2, curve: const Interval(.52, .61));
+        CurvedAnimation(parent: _controller, curve: const Interval(.52, .61));
     _textAnimEnd5 =
-        CurvedAnimation(parent: _controller2, curve: const Interval(.59, .68));
+        CurvedAnimation(parent: _controller, curve: const Interval(.59, .68));
     _textAnim6 =
-        CurvedAnimation(parent: _controller2, curve: const Interval(.66, .75));
+        CurvedAnimation(parent: _controller, curve: const Interval(.66, .75));
     _textAnimEnd6 =
-        CurvedAnimation(parent: _controller2, curve: const Interval(.73, .82));
+        CurvedAnimation(parent: _controller, curve: const Interval(.73, .82));
     _textAnim7 =
-        CurvedAnimation(parent: _controller2, curve: const Interval(.80, .89));
+        CurvedAnimation(parent: _controller, curve: const Interval(.80, .89));
     _textAnimEnd7 =
-        CurvedAnimation(parent: _controller2, curve: const Interval(.87, 1));
+        CurvedAnimation(parent: _controller, curve: const Interval(.87, 1));
 
     ///
     /// dot animation
     _dotAnim1 =
-        CurvedAnimation(parent: _controller2, curve: const Interval(.04, .1));
+        CurvedAnimation(parent: _controller, curve: const Interval(.04, .1));
     _dotAnimEnd1 = CurvedAnimation(
-        parent: _controller2,
+        parent: _controller,
         curve: const Interval(.1, .2, curve: Curves.bounceOut));
     _dotAnim2 =
-        CurvedAnimation(parent: _controller2, curve: const Interval(.14, .3));
+        CurvedAnimation(parent: _controller, curve: const Interval(.14, .3));
     _dotAnimEnd2 = CurvedAnimation(
-        parent: _controller2,
+        parent: _controller,
         curve: const Interval(.3, .4, curve: Curves.bounceOut));
     _dotAnim3 =
-        CurvedAnimation(parent: _controller2, curve: const Interval(.34, .5));
+        CurvedAnimation(parent: _controller, curve: const Interval(.34, .5));
     _dotAnimEnd3 = CurvedAnimation(
-        parent: _controller2,
+        parent: _controller,
         curve: const Interval(.5, .6, curve: Curves.bounceOut));
     _dotAnim4 =
-        CurvedAnimation(parent: _controller2, curve: const Interval(.54, .7));
+        CurvedAnimation(parent: _controller, curve: const Interval(.54, .7));
     _dotAnimEnd4 = CurvedAnimation(
-        parent: _controller2,
+        parent: _controller,
         curve: const Interval(.7, .8, curve: Curves.bounceOut));
     _dotAnim5 =
-        CurvedAnimation(parent: _controller2, curve: const Interval(.74, .9));
+        CurvedAnimation(parent: _controller, curve: const Interval(.74, .9));
     _dotAnimEnd5 = CurvedAnimation(
-        parent: _controller2,
+        parent: _controller,
         curve: const Interval(.9, .96, curve: Curves.bounceOut));
-    _controller1.repeat();
-    _controller2.repeat();
+    _controller.repeat();
   }
 
   @override
@@ -123,49 +111,35 @@ class _WelcomeScreenState extends State<WelcomeScreen>
     final dotWidth = (textWidth * 2) / 6;
     final dotBetweenWidth = dotWidth / 6;
     return Scaffold(
-      backgroundColor: MyColor.bluePrimary,
+      backgroundColor: MyColor.ashhLight,
       body: AnimatedBuilder(
-        animation: _controller1,
+        animation: _controller,
         builder: (context, _) => Stack(
           children: [
-            const Positioned.fill(
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  gradient: SweepGradient(
-                    // begin: Alignment.topLeft,
-                    // end: Alignment.bottomCenter,
-                    colors: [
-                      MyColor.bluePrimary,
-                      MyColor.blueSecondary,
-                      MyColor.skyPrimary,
-                      MyColor.blueSecondary,
-                      MyColor.bluePrimary,
-                      MyColor.bluePrimary,
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            // soowGood-img animation
-            Positioned(
-              left: -size.width * .4,
-              width: size.width * .8,
-              top: size.height * .21,
-              child: Opacity(
-                opacity: (_imgAnim1.value) - _imgAnimEnd1.value,
-                child: Transform(
-                  alignment: Alignment.center,
-                  transform: Matrix4.identity()
-                    ..setEntry(3, 2, .001)
-                    ..scale(.3 + .7 * _imgAnim1.value - .7 * _imgAnimEnd1.value)
-                    ..translate((size.width * .5) * _imgAnim1.value -
-                        (size.width * .5) * _imgAnimEnd1.value),
-                  // ..rotateX(
-                  //     (360 * _imgAnim1.value - 360 * _imgAnimEnd1.value) /
-                  //         90 *
-                  //         pi),
-                  child: Image.asset("assets/images/main_logo.png"),
-                ),
+            // const Positioned.fill(
+            //   child: DecoratedBox(
+            //     decoration: BoxDecoration(
+            //       gradient: SweepGradient(
+            //         // begin: Alignment.topLeft,
+            //         // end: Alignment.bottomCenter,
+            //         colors: [
+            //           MyColor.bluePrimary,
+            //           MyColor.blueSecondary,
+            //           MyColor.skyPrimary,
+            //           MyColor.blueSecondary,
+            //           MyColor.bluePrimary,
+            //           MyColor.bluePrimary,
+            //         ],
+            //       ),
+            //     ),
+            //   ),
+            // ),
+            // soowGood-img
+            Center(
+              child: Image.asset(
+                "assets/images/main_logo.png",
+                width: size.width * .7,
+                color: MyColor.bluePrimary,
               ),
             ),
 
@@ -281,14 +255,13 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   Widget _dotIcon() {
     return const DecoratedBox(
       decoration:
-          BoxDecoration(shape: BoxShape.circle, color: MyColor.ashhLight),
+          BoxDecoration(shape: BoxShape.circle, color: MyColor.bluePrimary),
     );
   }
 
   @override
   void dispose() {
-    _controller1.dispose();
-    _controller2.dispose();
+    _controller.dispose();
     super.dispose();
   }
 }

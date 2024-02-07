@@ -37,6 +37,8 @@ class CmNameEmailField extends StatelessWidget {
               borderSide: BorderSide(color: Colors.white24),
               borderRadius: BorderRadius.all(Radius.circular(14)),
             ),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+            focusedBorder: InputBorder.none,
           ),
           maxLines: maxLines,
           validator: (value) {
