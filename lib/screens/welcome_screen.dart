@@ -115,6 +115,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
       body: AnimatedBuilder(
         animation: _controller,
         builder: (context, _) => Stack(
+          clipBehavior: Clip.none,
           children: [
             // const Positioned.fill(
             //   child: DecoratedBox(
@@ -134,13 +135,28 @@ class _WelcomeScreenState extends State<WelcomeScreen>
             //     ),
             //   ),
             // ),
+            Positioned(
+              top: 0,
+              left: 0,
+              child: RotatedBox(
+                quarterTurns: 2,
+                child: Image.asset("assets/images/wave_logo.png",
+                    height: size.height * .3),
+              ),
+            ),
+            Positioned(
+              bottom: 0,
+              right: 0,
+              child: RotatedBox(
+                quarterTurns: 0,
+                child: Image.asset("assets/images/wave_logo.png",
+                    height: size.height * .3),
+              ),
+            ),
             // soowGood-img
             Center(
-              child: Image.asset(
-                "assets/images/main_logo.png",
-                width: size.width * .7,
-                color: MyColor.bluePrimary,
-              ),
+              child: Image.asset("assets/images/splash_logo.png",
+                  width: size.width * .7),
             ),
 
             ///
