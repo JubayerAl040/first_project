@@ -173,7 +173,7 @@ class OrderListItem extends StatelessWidget {
           ),
           _getTimeLocation(
             Icons.location_on_outlined,
-            "218 Eastern Avenu, IG4 5AB",
+            "218 Eastern Avenue, IG4 5AB",
           ),
         ],
       ),
