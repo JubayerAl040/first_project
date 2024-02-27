@@ -1,10 +1,14 @@
-import 'package:first_project/screens/book_lawyer_screen.dart';
-import 'package:first_project/screens/book_pet_travel_screen.dart';
-import 'package:first_project/screens/book_photograph_screen.dart';
-import 'package:first_project/screens/order_screen.dart';
+import 'package:first_project/screens/date_picker_screen.dart';
+import 'package:first_project/screens/doorap/order_screen.dart';
+import 'package:first_project/screens/doorap/profile_settings_screen.dart';
+import 'package:first_project/screens/doorap/signup_screen.dart';
+import 'package:first_project/screens/map_test_screen.dart';
+import 'package:first_project/screens/pet-continent/book_details_screen.dart';
+import 'package:first_project/screens/pet-continent/book_lawyer_screen.dart';
+import 'package:first_project/screens/pet-continent/book_pet_travel_screen.dart';
+import 'package:first_project/screens/pet-continent/book_photograph_screen.dart';
 import 'package:first_project/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 
 class InAppUpdateScreen extends StatefulWidget {
   const InAppUpdateScreen({super.key});
@@ -16,70 +20,135 @@ class _InAppUpdateScreenState extends State<InAppUpdateScreen> {
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      canPop: false,
-      onPopInvoked: (bool didPop) async {
-        if (didPop) {
-          print("true");
-          SchedulerBinding.instance.addPostFrameCallback((_) {
-            Navigator.pop(context);
-          });
-        }
-        showExitPopup(context);
-      },
+      canPop: true,
       child: Scaffold(
         appBar: AppBar(title: const Text('In App Review Example')),
         body: Padding(
           padding: const EdgeInsets.all(20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => const WelcomeScreen()));
-                },
-                child: const Text('Go To Welcome Screen'),
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => const WelcomeScreen()));
+                  },
+                  child: const Text('Go To Welcome Screen'),
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => const BookPhotographScreen()));
+                  },
+                  child: const Text('BookPhotographScreen'),
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => const BookLawyerScreen()));
+                  },
+                  child: const Text('BookLawyerScreen'),
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => const BookPetTravelScreen()));
+                  },
+                  child: const Text('Book Pet Travel Screen'),
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => const ActivityScreen()));
+                  },
+                  child: const Text('Go To Order Screen'),
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => const ProfileSettingsScreen()));
+                  },
+                  child: const Text('Settings Screen'),
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const SignUpScreen()),
+                    );
+                  },
+                  child: const Text('SignUp Screen'),
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (_) => const BookPhotographScreen()));
-                },
-                child: const Text('BookPhotographScreen'),
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
+                          builder: (_) => const BookDetailsScreen()),
+                    );
+                  },
+                  child: const Text('Book Details Screen'),
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => const MapRouteTestScreen()),
+                        );
+                      },
+                      child: const Text('Map Route Screen'),
+                    ),
+                    const SizedBox(width: 15),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => const MapTestScreen()),
+                        );
+                      },
+                      child: const Text('Map Test Screen'),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (_) => const BookLawyerScreen()));
-                },
-                child: const Text('BookLawyerScreen'),
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) => const BookPetTravelScreen()));
-                },
-                child: const Text('Book Pet Travel Screen'),
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => const OrderScreen()));
-                },
-                child: const Text('Go To Order Screen'),
-              ),
-              const SizedBox(height: 20),
-            ],
+                          builder: (_) => const DatePickerScreen()),
+                    );
+                  },
+                  child: const Text('Date Picker Screen'),
+                ),
+                const SizedBox(height: 20),
+              ],
+            ),
           ),
         ),
       ),

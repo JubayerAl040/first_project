@@ -32,6 +32,10 @@
 	<string>This app requires access to the photo library</string>
 	<key>PermissionGroupNotification</key>
 	<string>This app requires access to the send notifications.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app needs access to location when open.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription </key>
+	<string>This app needs access to location when open.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UISupportsDocumentBrowser</key>

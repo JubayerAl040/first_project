@@ -1,4 +1,4 @@
-import 'package:first_project/screens/dash_screen.dart';
+import 'package:first_project/screens/inapp_update_page.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeScreen extends StatefulWidget {
