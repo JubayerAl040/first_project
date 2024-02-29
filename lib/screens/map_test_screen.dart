@@ -270,16 +270,16 @@ class _MapRouteTestScreenState extends State<MapRouteTestScreen> {
                 position: LatLng(_destinyLatitude, _destinyLongitude),
               ),
             },
-            // polylines: {
-            //   Polyline(
-            //     polylineId: PolylineId(DateTime.now().toIso8601String()),
-            //     color: Colors.black,
-            //     points: _polylineCoordinates,
-            //     startCap: Cap.roundCap,
-            //     endCap: Cap.roundCap,
-            //     width: 6,
-            //   )
-            // },
+            polylines: {
+              Polyline(
+                polylineId: PolylineId(DateTime.now().toIso8601String()),
+                color: Colors.black,
+                points: _polylineCoordinates,
+                startCap: Cap.roundCap,
+                endCap: Cap.roundCap,
+                width: 6,
+              )
+            },
           ),
         ],
       )),
@@ -290,17 +290,17 @@ class _MapRouteTestScreenState extends State<MapRouteTestScreen> {
     _originLatitude = position.latitude;
     _originLongitude = position.longitude;
     _polylineCoordinates = [];
-    // final result = await PolylinePoints().getRouteBetweenCoordinates(
-    //   googleAPiKey,
-    //   PointLatLng(_originLatitude, _originLongitude),
-    //   PointLatLng(_destinyLatitude, _destinyLongitude),
-    //   travelMode: TravelMode.driving,
-    // );
-    // if (result.points.isNotEmpty) {
-    //   for (var point in result.points) {
-    //     _polylineCoordinates.add(LatLng(point.latitude, point.longitude));
-    //   }
-    //}
+    final result = await PolylinePoints().getRouteBetweenCoordinates(
+      googleAPiKey,
+      PointLatLng(_originLatitude, _originLongitude),
+      PointLatLng(_destinyLatitude, _destinyLongitude),
+      travelMode: TravelMode.driving,
+    );
+    if (result.points.isNotEmpty) {
+      for (var point in result.points) {
+        _polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+      }
+    }
     setState(() {});
     _mapController.animateCamera(
       CameraUpdate.newCameraPosition(
