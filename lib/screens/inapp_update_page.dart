@@ -9,6 +9,8 @@ import 'package:first_project/screens/pet-continent/book_pet_travel_screen.dart'
 import 'package:first_project/screens/pet-continent/book_photograph_screen.dart';
 import 'package:first_project/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class InAppUpdateScreen extends StatefulWidget {
   const InAppUpdateScreen({super.key});
@@ -113,13 +115,7 @@ class _InAppUpdateScreenState extends State<InAppUpdateScreen> {
                 Row(
                   children: [
                     ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => const MapRouteTestScreen()),
-                        );
-                      },
+                      onPressed: _determinePosition,
                       child: const Text('Map Route Screen'),
                     ),
                     const SizedBox(width: 15),
@@ -154,53 +150,43 @@ class _InAppUpdateScreenState extends State<InAppUpdateScreen> {
       ),
     );
   }
-}
 
-Future<bool> showExitPopup(BuildContext context) async => await showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text(
-          'Exit App',
-          style: TextStyle(
-              fontFamily: "poppins_regular", fontWeight: FontWeight.bold),
+  void _determinePosition() async {
+    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return Future.error('Location services are disabled.');
+    }
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location permissions are denied');
+      }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+    final currentPosition = await Geolocator.getCurrentPosition();
+    final originIcon = await BitmapDescriptor.fromAssetImage(
+        const ImageConfiguration(), "assets/icons/person_icon.png");
+    final destinyIcon = await BitmapDescriptor.fromAssetImage(
+        const ImageConfiguration(), "assets/icons/store_icon.png");
+    // ignore: use_build_context_synchronously
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => MapRouteTestScreen(
+          currentPosition:
+              LatLng(currentPosition.latitude, currentPosition.longitude),
+          destinyPosition: const LatLng(37.419001, -122.082376),
+          originIcon: originIcon,
+          desinyIcon: destinyIcon,
         ),
-        content: const Text(
-          'Do you want to exit SoowGood?',
-          style: TextStyle(
-              fontFamily: "poppins_regular",
-              fontSize: 14,
-              fontWeight: FontWeight.w600),
-        ),
-        actions: [
-          ElevatedButton(
-            onPressed: () => Navigator.pop(context, false),
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(MyColor.bluePrimary),
-            ),
-            child: const Text(
-              'No',
-              style: TextStyle(color: MyColor.ashhLight),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 4.0),
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context, true);
-                Navigator.pop(context, true);
-              },
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(MyColor.bluePrimary),
-              ),
-              child: const Text(
-                'Yes',
-                style: TextStyle(color: MyColor.ashhLight),
-              ),
-            ),
-          ),
-        ],
       ),
     );
+  }
+}
 
 class MyColor {
   static const categoryColor = [
