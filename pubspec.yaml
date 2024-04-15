@@ -29,6 +29,8 @@ dependencies:
   baseflow_plugin_template: ^2.1.2
   calendar_date_picker2: ^0.5.3
   flutter_polyline_points: ^2.0.0
+  flutter_inappwebview: ^6.0.0
+  webview_flutter: ^4.7.0
 
 dev_dependencies:
   flutter_test:

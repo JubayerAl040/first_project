@@ -1,5 +1,6 @@
 import 'package:first_project/screens/pdf_create/pt_home_offer_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:intl/intl.dart';
 
 class PrescriptionScreen extends StatefulWidget {
@@ -9,8 +10,13 @@ class PrescriptionScreen extends StatefulWidget {
 }
 
 class _PrescriptionScreenState extends State<PrescriptionScreen> {
+  final GlobalKey webViewKey = GlobalKey();
+  InAppWebViewController? webViewController;
+  static const _url =
+      "https://agora-video-call-eight.vercel.app/?username=JbPatient&aptCode=123456Abc&c=patient";
+  bool _isZoomEnable = true;
   final List<Widget> _pages = [];
-  int _selectedPage = 0;
+  final int _selectedPage = 0;
 
   @override
   void initState() {
@@ -30,78 +36,178 @@ class _PrescriptionScreenState extends State<PrescriptionScreen> {
       body: Stack(
         children: [
           _pages.isEmpty ? const SizedBox() : _pages[_selectedPage],
-          // counter
-          Positioned(
-            bottom: 5,
-            left: size.width * .2,
-            width: size.width * .6,
-            child: Container(
-              height: 60,
-              alignment: Alignment.center,
-              padding: const EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                color: const Color(0xFF01204E),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: List.generate(
-                          _pages.length,
-                          (i) => GestureDetector(
-                            onTap: () {
-                              setState(() => _selectedPage = i);
-                              print('_selectedPage: $_selectedPage');
-                            },
-                            child: Container(
-                              width: 40,
-                              height: double.infinity,
-                              padding: const EdgeInsets.all(5),
-                              margin: const EdgeInsets.symmetric(horizontal: 5),
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                color: _selectedPage == i
-                                    ? Colors.amber
-                                    : Colors.white,
-                                borderRadius: BorderRadius.circular(7),
-                              ),
-                              child: Text('P ${i + 1}'),
-                            ),
-                          ),
-                        ),
-                      ),
+          _isZoomEnable
+              ? Positioned.fill(child: _showVideoCall())
+              : Positioned(
+                  top: MediaQuery.of(context).padding.top + 5,
+                  right: 5,
+                  width: 180,
+                  height: 150,
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(20),
                     ),
-                  ),
-                  Container(
-                    width: 40,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                    ),
-                    child: IconButton(
-                      onPressed: () {
-                        _addPage();
-                      },
-                      icon: const Icon(Icons.add),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+                    child: _showVideoCall(),
+                  )),
+          // Positioned(
+          //   bottom: 5,
+          //   left: size.width * .2,
+          //   width: size.width * .6,
+          //   child: Container(
+          //     height: 60,
+          //     alignment: Alignment.center,
+          //     padding: const EdgeInsets.all(5),
+          //     decoration: BoxDecoration(
+          //       color: const Color(0xFF01204E),
+          //       borderRadius: BorderRadius.circular(8),
+          //     ),
+          //     child: Row(
+          //       children: [
+          //         Expanded(
+          //           child: SingleChildScrollView(
+          //             scrollDirection: Axis.horizontal,
+          //             child: Row(
+          //               children: List.generate(
+          //                 _pages.length,
+          //                 (i) => GestureDetector(
+          //                   onTap: () {
+          //                     setState(() => _selectedPage = i);
+          //                     print('_selectedPage: $_selectedPage');
+          //                   },
+          //                   child: Container(
+          //                     width: 40,
+          //                     height: double.infinity,
+          //                     padding: const EdgeInsets.all(5),
+          //                     margin:
+          //                         const EdgeInsets.symmetric(horizontal: 5),
+          //                     alignment: Alignment.center,
+          //                     decoration: BoxDecoration(
+          //                       color: _selectedPage == i
+          //                           ? Colors.amber
+          //                           : Colors.white,
+          //                       borderRadius: BorderRadius.circular(7),
+          //                     ),
+          //                     child: Text('P ${i + 1}'),
+          //                   ),
+          //                 ),
+          //               ),
+          //             ),
+          //           ),
+          //         ),
+          //         Container(
+          //           width: 40,
+          //           decoration: const BoxDecoration(
+          //             shape: BoxShape.circle,
+          //             color: Colors.white,
+          //           ),
+          //           child: IconButton(
+          //             onPressed: () {
+          //               _addPage();
+          //             },
+          //             icon: const Icon(Icons.add),
+          //           ),
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (_) => const PtHomeOfferCard()));
-        },
-        child: const Icon(Icons.add),
-      ),
+
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     Navigator.push(context,
+      //         MaterialPageRoute(builder: (_) => const PtHomeOfferCard()));
+      //   },
+      //   child: const Icon(Icons.add),
+      // ),
     );
+  }
+
+  Widget _showVideoCall() {
+    return Stack(
+      clipBehavior: Clip.hardEdge,
+      children: [
+        Positioned.fill(
+          child: InAppWebView(
+            key: webViewKey,
+            initialUrlRequest: URLRequest(url: WebUri(_url)),
+            initialSettings: InAppWebViewSettings(
+              allowFileAccess: true,
+              allowContentAccess: true,
+              databaseEnabled: true,
+              domStorageEnabled: true,
+              allowBackgroundAudioPlaying: true,
+              allowsInlineMediaPlayback: true,
+              disallowOverScroll: true,
+              mediaPlaybackRequiresUserGesture: false,
+              iframeAllow: "camera; microphone",
+              iframeAllowFullscreen: true,
+              preferredContentMode: UserPreferredContentMode.MOBILE,
+            ),
+            onWebViewCreated: (cntrl) async => webViewController = cntrl,
+            // onPermissionRequest: (controller, permissionRequest) async {
+            //   return PermissionResponse(
+            //     action: PermissionResponseAction.GRANT,
+            //     resources: [
+            //       PermissionResourceType.CAMERA,
+            //       PermissionResourceType.MICROPHONE,
+            //       PermissionResourceType.DEVICE_ORIENTATION_AND_MOTION,
+            //       PermissionResourceType.MIDI_SYSEX,
+            //       PermissionResourceType.PROTECTED_MEDIA_ID,
+            //     ],
+            //   );
+            // },
+            androidOnPermissionRequest: (controller, request, s) async {
+              return PermissionRequestResponse(
+                resources: s,
+                action: PermissionRequestResponseAction.GRANT,
+              );
+            },
+            onNavigationResponse: (_, __) async =>
+                NavigationResponseAction.ALLOW,
+          ),
+        ),
+        Positioned(
+          top: _isZoomEnable ? MediaQuery.of(context).padding.top + 5 : 0,
+          right: 0,
+          child: ElevatedButton(
+            onPressed: () => Navigator.pop(context),
+            style: ElevatedButton.styleFrom(
+              shape: const CircleBorder(),
+              padding: EdgeInsets.zero,
+              backgroundColor: Colors.black,
+            ),
+            child:
+                const Icon(Icons.close_outlined, size: 11, color: Colors.white),
+          ),
+        ),
+        Positioned(
+          top: _isZoomEnable ? MediaQuery.of(context).padding.top + 5 : 0,
+          left: 0,
+          child: ElevatedButton(
+            onPressed: () => setState(() => _isZoomEnable = !_isZoomEnable),
+            style: ElevatedButton.styleFrom(
+              shape: const CircleBorder(),
+              padding: const EdgeInsets.all(2),
+              backgroundColor: Colors.black,
+            ),
+            child: Icon(
+                _isZoomEnable ? Icons.minimize : Icons.home_max_outlined,
+                size: 11,
+                color: Colors.white),
+          ),
+        ),
+      ],
+    );
+  }
+
+  @override
+  void dispose() {
+    webViewController!.dispose();
+    super.dispose();
   }
 }
 

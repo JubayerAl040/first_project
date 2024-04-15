@@ -1,4 +1,5 @@
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
@@ -24,7 +25,91 @@ class _DatePickerScreenState extends State<DatePickerScreen> {
         child: SizedBox(
           width: 375,
           child: ListView(
-            children: [_buildCalendarDialogButton()],
+            children: [
+              _buildCalendarDialogButton(),
+              ElevatedButton(
+                onPressed: () async {
+                  final TimeOfDay? picked = await showTimePicker(
+                    context: context,
+                    initialTime: TimeOfDay.now(),
+                    builder: (BuildContext context, Widget? child) {
+                      return Theme(
+                        data: ThemeData.light().copyWith(
+                            timePickerTheme: TimePickerThemeData(
+                          //elevation: 10,
+                          backgroundColor: Colors.white, // Background color
+
+                          hourMinuteTextColor:
+                              Colors.black, // Text color for hours and minutes
+                          // dayPeriodTextColor:
+                          //     Colors.green[900], // Text color for AM/PM
+                          dayPeriodBorderSide: const BorderSide(
+                              color: Colors.white), // Border color for AM/PM
+                          dialHandColor: Colors.black, // Color of the hour hand
+                          // dialTextColor:
+                          //     Colors.green, // Text color on the clock dial
+                          dialBackgroundColor: Colors.white,
+                          dayPeriodColor: Colors.white,
+                          dayPeriodTextColor: Colors.black,
+                          hourMinuteColor: Colors.grey[100],
+
+                          // entryModeIconColor: Colors.blue,
+                          // helpTextStyle: const TextStyle(
+                          //   color: Colors
+                          //       .blueAccent, // Set the text color for "Enter time"
+                          // ),
+                          //   cancelButtonStyle: ButtonStyle(
+                          //       backgroundColor:
+                          //           MaterialStateProperty.all<Color>(
+                          //               Colors.brown.shade300),
+                          //       foregroundColor:
+                          //           MaterialStateProperty.all<Color>(
+                          //               Colors.green[900]!)),
+                          //   confirmButtonStyle: ButtonStyle(
+                          //       backgroundColor:
+                          //           MaterialStateProperty.all<Color>(
+                          //               Colors.brown.shade300),
+                          //       foregroundColor:
+                          //           MaterialStateProperty.all<Color>(
+                          //               Colors.green[900]!)),
+                          //   hourMinuteTextStyle: const TextStyle(
+                          //       fontSize:
+                          //           30), // Text style for hours and minutes
+                          // ),
+                          // textTheme: TextTheme(
+                          //   bodySmall: TextStyle(color: Colors.blueAccent),
+                          // ),
+                          // colorScheme: ColorScheme(
+                          //   primary: Colors.deepPurple,
+                          //   secondary: Colors.brown.shade300,
+                          //   background: Colors.blueAccent,
+                          //   surface: Colors.blueAccent,
+                          //   onBackground: Colors.white,
+                          //   onSurface: Colors.white,
+                          //   onError: Colors.white,
+                          //   onPrimary: Colors.white,
+                          //   onSecondary: Colors.black,
+                          //   brightness: Brightness.dark,
+                          //   error: Colors.red,
+                          // ),
+                          // textSelectionTheme: const TextSelectionThemeData(
+                          //   cursorColor: Colors.lightGreen,
+                          //   selectionColor: Colors.lightGreen,
+                          //   selectionHandleColor: Colors.lightGreen,
+                          // ),
+                          // cupertinoOverrideTheme: const CupertinoThemeData(
+                          //   primaryColor: Colors.lightGreen,
+                          // ),
+                          // ),
+                        )),
+                        child: child!,
+                      );
+                    },
+                  );
+                },
+                child: const Text("Show dialog color change"),
+              ),
+            ],
           ),
         ),
       ),

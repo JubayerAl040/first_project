@@ -3,10 +3,12 @@ import 'package:first_project/screens/doorap/order_screen.dart';
 import 'package:first_project/screens/doorap/profile_settings_screen.dart';
 import 'package:first_project/screens/doorap/signup_screen.dart';
 import 'package:first_project/screens/map_test_screen.dart';
+import 'package:first_project/screens/pdf_create/prescription_screen.dart';
 import 'package:first_project/screens/pet-continent/book_details_screen.dart';
 import 'package:first_project/screens/pet-continent/book_lawyer_screen.dart';
 import 'package:first_project/screens/pet-continent/book_pet_travel_screen.dart';
 import 'package:first_project/screens/pet-continent/book_photograph_screen.dart';
+import 'package:first_project/screens/video_call_screen.dart';
 import 'package:first_project/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -31,6 +33,17 @@ class _InAppUpdateScreenState extends State<InAppUpdateScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => const PrescriptionScreen()),
+                    );
+                  },
+                  child: const Text('Prescription Screen'),
+                ),
+                const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
                     Navigator.push(
@@ -132,17 +145,49 @@ class _InAppUpdateScreenState extends State<InAppUpdateScreen> {
                   ],
                 ),
                 const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) => const DatePickerScreen()),
-                    );
-                  },
-                  child: const Text('Date Picker Screen'),
+                Row(
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => const DatePickerScreen()),
+                        );
+                      },
+                      child: const Text('Date Picker Screen'),
+                    ),
+                    const SizedBox(width: 15),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => const VideoCallScreen()),
+                        );
+                      },
+                      child: const Text('Video Call Screen'),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () async {
+                    await showDialog(
+                      context: context,
+                      builder: (context) => const AlertDialog(
+                        backgroundColor: Colors.white,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(12)),
+                        ),
+                        title: Text('📑 Our Policies'),
+                        content: Text("11111"),
+                      ),
+                    );
+                  },
+                  child: const Text('Test Show dialog'),
+                ),
               ],
             ),
           ),

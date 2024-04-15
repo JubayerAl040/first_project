@@ -19,7 +19,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(primarySwatch: Colors.blue),
+      theme: ThemeData(
+        primaryColorLight: Colors.black,
+        useMaterial3: false,
+        primaryColor: Colors.white,
+        // primarySwatch: MaterialColor(000000, ),
+        dialogTheme: const DialogTheme(backgroundColor: Colors.yellow),
+      ),
       home: const InAppUpdateScreen(),
     );
   }
