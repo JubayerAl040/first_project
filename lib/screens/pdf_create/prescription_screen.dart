@@ -50,7 +50,8 @@ class _PrescriptionScreenState extends State<PrescriptionScreen> {
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: _showVideoCall(),
-                  )),
+                  ),
+                ),
           // Positioned(
           //   bottom: 5,
           //   left: size.width * .2,
@@ -184,22 +185,32 @@ class _PrescriptionScreenState extends State<PrescriptionScreen> {
                 const Icon(Icons.close_outlined, size: 11, color: Colors.white),
           ),
         ),
-        Positioned(
-          top: _isZoomEnable ? MediaQuery.of(context).padding.top + 5 : 0,
-          left: 0,
-          child: ElevatedButton(
-            onPressed: () => setState(() => _isZoomEnable = !_isZoomEnable),
-            style: ElevatedButton.styleFrom(
-              shape: const CircleBorder(),
-              padding: const EdgeInsets.all(2),
-              backgroundColor: Colors.black,
-            ),
-            child: Icon(
-                _isZoomEnable ? Icons.minimize : Icons.home_max_outlined,
-                size: 11,
-                color: Colors.white),
-          ),
-        ),
+        _isZoomEnable
+            ? Positioned(
+                top: MediaQuery.of(context).padding.top + 5,
+                left: 10,
+                child: ElevatedButton(
+                  onPressed: () =>
+                      setState(() => _isZoomEnable = !_isZoomEnable),
+                  style:
+                      ElevatedButton.styleFrom(backgroundColor: Colors.black),
+                  child: const Text("Prescription"),
+                ),
+              )
+            : Positioned(
+                top: 0,
+                left: 0,
+                child: ElevatedButton(
+                  onPressed: () =>
+                      setState(() => _isZoomEnable = !_isZoomEnable),
+                  style: ElevatedButton.styleFrom(
+                    shape: const CircleBorder(),
+                    backgroundColor: Colors.black,
+                  ),
+                  child: const Icon(Icons.home_max_outlined,
+                      size: 11, color: Colors.white),
+                ),
+              ),
       ],
     );
   }
