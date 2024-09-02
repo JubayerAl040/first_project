@@ -1,97 +1,15 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:first_project/screens/inapp_update_page.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'dart:async';
 
-Future<void> backgroundHandler(RemoteMessage message) async {
-  String? title = message.notification!.title;
-  String? body = message.notification!.body;
-  AwesomeNotifications().createNotification(
-    content: NotificationContent(
-      id: 123,
-      channelKey: "call_channel",
-      color: Colors.white,
-      title: title,
-      body: body,
-      category: NotificationCategory.Call,
-      wakeUpScreen: true,
-      fullScreenIntent: true,
-      autoDismissible: false,
-      backgroundColor: Colors.orange,
-    ),
-    actionButtons: [
-      NotificationActionButton(
-        key: "ACCEPT",
-        label: "Accept Call",
-        color: Colors.green,
-        autoDismissible: true,
-      ),
-      NotificationActionButton(
-        key: "REJECT",
-        label: "Reject Call",
-        color: Colors.red,
-        autoDismissible: true,
-      ),
-    ],
-  );
-}
-
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  print("firebase initialize done-=-----------");
-  AwesomeNotifications().initialize(null, [
-    NotificationChannel(
-      channelKey: "call_channel",
-      channelName: "Call Channel",
-      channelDescription: "Channel of calling",
-      defaultColor: Colors.redAccent,
-      ledColor: Colors.white,
-      importance: NotificationImportance.Max,
-      channelShowBadge: true,
-      locked: true,
-      defaultRingtoneType: DefaultRingtoneType.Ringtone,
-    ),
-  ]);
-  FirebaseMessaging.onBackgroundMessage(backgroundHandler);
-
-  // await Hive.initFlutter();
-  // await Hive.openBox("login-info");
-
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-  static final GlobalKey<NavigatorState> navigatorKey =
-      GlobalKey<NavigatorState>();
+class VideoNotificationScreen extends StatefulWidget {
+  const VideoNotificationScreen({super.key});
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primaryColorLight: Colors.black,
-        useMaterial3: false,
-        primaryColor: Colors.white,
-        // primarySwatch: MaterialColor(000000, ),
-        dialogTheme: const DialogTheme(backgroundColor: Colors.yellow),
-      ),
-      home: const InAppUpdateScreen(),
-    );
-  }
+  State<VideoNotificationScreen> createState() =>
+      _VideoNotificationScreenState();
 }
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
+class _VideoNotificationScreenState extends State<VideoNotificationScreen> {
   @override
   void initState() {
     super.initState();
@@ -142,28 +60,26 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Row(
-              children: [
-                ElevatedButton(
-                  onPressed: () async {
-                    String? key = await FirebaseMessaging.instance.getToken();
-                    print(key);
-                  },
-                  child: const Text("Get Token"),
-                ),
-                const SizedBox(width: 20),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: const Text("Send Notification"),
-                ),
-              ],
-            )
-          ],
-        ),
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text("Video Notification Screen"),
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          ElevatedButton(
+            onPressed: () async {
+              String? key = await FirebaseMessaging.instance.getToken();
+              print(key);
+            },
+            child: const Text("Get Token"),
+          ),
+          const SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: () {},
+            child: const Text("Send Notification"),
+          ),
+        ],
       ),
     );
   }

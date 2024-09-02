@@ -12,16 +12,17 @@ class PrescriptionScreen extends StatefulWidget {
 class _PrescriptionScreenState extends State<PrescriptionScreen> {
   final GlobalKey webViewKey = GlobalKey();
   InAppWebViewController? webViewController;
-  static const _url =
+  static const _url = // "https://pub.dev/";
       "https://agora-video-call-eight.vercel.app/?username=JbPatient&aptCode=123456Abc&c=patient";
   bool _isZoomEnable = true;
   final List<Widget> _pages = [];
   final int _selectedPage = 0;
+  double dxWidth = 5, dyHeight = 40;
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) => _addPage());
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _addPage());
   }
 
   void _addPage() => setState(() {
@@ -39,17 +40,24 @@ class _PrescriptionScreenState extends State<PrescriptionScreen> {
           _isZoomEnable
               ? Positioned.fill(child: _showVideoCall())
               : Positioned(
-                  top: MediaQuery.of(context).padding.top + 5,
-                  right: 5,
+                  top: dyHeight,
+                  right: dxWidth,
                   width: 180,
                   height: 150,
-                  child: Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(20),
+                  child: GestureDetector(
+                    onPanUpdate: (details) {
+                      dxWidth -= details.delta.dx;
+                      dyHeight += details.delta.dy;
+                      setState(() {});
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: _showVideoCall(),
                     ),
-                    child: _showVideoCall(),
                   ),
                 ),
           // Positioned(
